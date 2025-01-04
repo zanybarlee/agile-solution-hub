@@ -6,9 +6,9 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: "Home", href: "/" },
+    { name: "Quarto", href: "/" },
     { name: "Products & Services", href: "#products" },
-    { name: "About", href: "#about" },
+    { name: "Contact Person", href: "#contact-person" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -16,12 +16,16 @@ const Navigation = () => {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200"
+      className="fixed top-0 left-0 right-0 z-50 bg-primary text-white"
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <a href="/" className="text-2xl font-bold text-primary">
-            Quarto
+          <a href="/" className="text-2xl font-bold text-white">
+            <img 
+              src="/lovable-uploads/847f55eb-a8b0-4ba5-ae6c-3ce22bfa9b65.png" 
+              alt="Quarto Logo" 
+              className="h-8"
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -30,7 +34,7 @@ const Navigation = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-text hover:text-accent transition-colors duration-300"
+                className="text-text-light hover:text-white transition-colors duration-300 uppercase text-sm tracking-wider"
               >
                 {item.name}
               </a>
@@ -39,7 +43,7 @@ const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-text"
+            className="md:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X /> : <Menu />}
@@ -59,7 +63,7 @@ const Navigation = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-text hover:text-accent transition-colors duration-300"
+                  className="text-text-light hover:text-white transition-colors duration-300 uppercase text-sm tracking-wider"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}

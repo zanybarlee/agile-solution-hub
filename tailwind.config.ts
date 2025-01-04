@@ -35,14 +35,14 @@ export default {
           dark: "#E5E5E7",
         },
         accent: {
-          DEFAULT: "#9B87F5",
-          light: "#AB97FF",
-          dark: "#8B77E5",
+          DEFAULT: "#B3271C",
+          light: "#C3372C",
+          dark: "#A3170C",
         },
         text: {
           DEFAULT: "#333333",
-          light: "#666666",
-          dark: "#000000",
+          light: "#9F9EA1",
+          dark: "#1A1F2C",
         },
       },
       borderRadius: {

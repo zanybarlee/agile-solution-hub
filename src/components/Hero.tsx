@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-secondary py-20 px-4">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-primary py-20 px-4">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-secondary/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/50" />
       </div>
       
       <div className="container mx-auto relative z-10">
@@ -14,19 +14,15 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <span className="inline-block px-4 py-1 mb-6 text-sm font-medium text-accent bg-accent/10 rounded-full">
-            Welcome to Quarto Software
-          </span>
-          
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl md:text-6xl font-bold text-primary mb-6"
+            className="text-4xl md:text-6xl font-bold text-white mb-6"
           >
-            Innovative Software Solutions
+            Welcome to Quarto Software
             <br />
-            <span className="text-accent">for a Dynamic World</span>
+            <span className="text-accent">Innovative Solutions</span>
           </motion.h1>
           
           <motion.p
@@ -44,8 +40,8 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <button className="px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary-light transition-colors duration-300 shadow-lg">
-              Learn More
+            <button className="px-8 py-3 bg-accent text-white rounded-lg hover:bg-accent-light transition-colors duration-300 shadow-lg uppercase tracking-wider">
+              Contact Us
             </button>
           </motion.div>
         </motion.div>
