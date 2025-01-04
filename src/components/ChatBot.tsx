@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/components/ui/use-toast";
-import { MessageCircle, X } from "lucide-react";
+import { MessageCircle, Minimize2, RotateCcw } from "lucide-react";
 
 interface Message {
   content: string;
@@ -15,6 +15,7 @@ const ChatBot = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const { toast } = useToast();
 
   const query = async (data: { question: string }) => {
@@ -62,14 +63,24 @@ const ChatBot = () => {
   };
 
   const handleClose = () => {
-    setIsOpen(false);
-    setMessages([]); // Clear chat history when closing
+    setIsMinimized(true);
+  };
+
+  const handleClearHistory = () => {
+    setMessages([]);
+    toast({
+      title: "Chat history cleared",
+      description: "Your conversation has been cleared.",
+    });
   };
 
   return (
     <>
       <Button
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+          setIsMinimized(false);
+        }}
         className="fixed bottom-4 right-4 rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light"
         aria-label="Open chat"
       >
@@ -77,55 +88,72 @@ const ChatBot = () => {
       </Button>
 
       {isOpen && (
-        <div className="fixed bottom-20 right-4 w-full max-w-[400px] rounded-lg border bg-background shadow-lg animate-fade-in">
+        <div 
+          className={`fixed bottom-20 right-4 w-full max-w-[400px] rounded-lg border bg-background shadow-lg animate-fade-in ${
+            isMinimized ? 'h-12' : ''
+          }`}
+        >
           <div className="flex justify-between items-center p-4 border-b">
             <h2 className="font-semibold">Chat with us</h2>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleClose}
-              className="h-8 w-8"
-              aria-label="Close chat"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleClearHistory}
+                className="h-8 w-8"
+                aria-label="Clear chat history"
+              >
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleClose}
+                className="h-8 w-8"
+                aria-label="Minimize chat"
+              >
+                <Minimize2 className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-          <div className="p-4">
-            <ScrollArea className="h-[400px] pr-4">
-              <div className="space-y-4">
-                {messages.map((message, index) => (
-                  <div
-                    key={index}
-                    className={`flex ${
-                      message.isUser ? "justify-end" : "justify-start"
-                    }`}
-                  >
+          {!isMinimized && (
+            <div className="p-4">
+              <ScrollArea className="h-[400px] pr-4">
+                <div className="space-y-4">
+                  {messages.map((message, index) => (
                     <div
-                      className={`max-w-[80%] p-3 rounded-lg ${
-                        message.isUser
-                          ? "bg-accent text-white"
-                          : "bg-secondary"
+                      key={index}
+                      className={`flex ${
+                        message.isUser ? "justify-end" : "justify-start"
                       }`}
                     >
-                      {message.content}
+                      <div
+                        className={`max-w-[80%] p-3 rounded-lg ${
+                          message.isUser
+                            ? "bg-accent text-white"
+                            : "bg-secondary"
+                        }`}
+                      >
+                        {message.content}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-            <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
-              <Input
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Type your message..."
-                disabled={isLoading}
-                className="flex-1"
-              />
-              <Button type="submit" disabled={isLoading} className="bg-accent hover:bg-accent-light">
-                {isLoading ? "Sending..." : "Send"}
-              </Button>
-            </form>
-          </div>
+                  ))}
+                </div>
+              </ScrollArea>
+              <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
+                <Input
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  placeholder="Type your message..."
+                  disabled={isLoading}
+                  className="flex-1"
+                />
+                <Button type="submit" disabled={isLoading} className="bg-accent hover:bg-accent-light">
+                  {isLoading ? "Sending..." : "Send"}
+                </Button>
+              </form>
+            </div>
+          )}
         </div>
       )}
     </>
