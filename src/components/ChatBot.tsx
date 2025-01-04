@@ -61,6 +61,11 @@ const ChatBot = () => {
     }
   };
 
+  const handleClose = () => {
+    setIsOpen(false);
+    setMessages([]); // Clear chat history when closing
+  };
+
   return (
     <>
       <Button
@@ -78,7 +83,7 @@ const ChatBot = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="h-8 w-8"
               aria-label="Close chat"
             >
