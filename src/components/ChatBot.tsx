@@ -62,7 +62,7 @@ const ChatBot = () => {
     }
   };
 
-  const handleClose = () => {
+  const handleMinimize = () => {
     setIsMinimized(true);
   };
 
@@ -74,15 +74,22 @@ const ChatBot = () => {
     });
   };
 
+  const toggleChat = () => {
+    if (isOpen) {
+      setIsOpen(false);
+      setIsMinimized(false);
+    } else {
+      setIsOpen(true);
+      setIsMinimized(false);
+    }
+  };
+
   return (
     <>
       <Button
-        onClick={() => {
-          setIsOpen(true);
-          setIsMinimized(false);
-        }}
+        onClick={toggleChat}
         className="fixed bottom-4 right-4 rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light"
-        aria-label="Open chat"
+        aria-label="Toggle chat"
       >
         <MessageCircle className="h-6 w-6" />
       </Button>
@@ -108,7 +115,7 @@ const ChatBot = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={handleClose}
+                onClick={handleMinimize}
                 className="h-8 w-8"
                 aria-label="Minimize chat"
               >
