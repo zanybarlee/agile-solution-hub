@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Navigation from "../components/Navigation";
 import Hero from "../components/Hero";
 import Features from "../components/Features";
+import ChatBot from "../components/ChatBot";
 import { motion, useScroll, useSpring } from "framer-motion";
 
 const Index = () => {
@@ -13,7 +14,6 @@ const Index = () => {
   });
 
   useEffect(() => {
-    // Smooth scroll behavior
     document.documentElement.style.scrollBehavior = "smooth";
     return () => {
       document.documentElement.style.scrollBehavior = "auto";
@@ -30,6 +30,9 @@ const Index = () => {
       <main>
         <Hero />
         <Features />
+        <section className="py-16 px-4">
+          <ChatBot />
+        </section>
       </main>
     </div>
   );
