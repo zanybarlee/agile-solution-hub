@@ -30,9 +30,7 @@ const Index = () => {
       <main>
         <Hero />
         <Features />
-        <section className="py-16 px-4">
-          <ChatBot />
-        </section>
+        <ChatBot />
       </main>
     </div>
   );
