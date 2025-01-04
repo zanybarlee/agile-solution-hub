@@ -18,49 +18,52 @@ const ChatBot = () => {
   const [isMinimized, setIsMinimized] = useState(false);
   const { toast } = useToast();
 
-  const query = async (data: { question: string }) => {
+const generateAIResponse = async (userInput) => {
+  const data = { question: userInput };
+
+  try {
     const response = await fetch(
       "http://127.0.0.1:3001/api/v1/prediction/58176ce6-bc22-4ba8-9c43-4439ab962931",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       }
     );
     const result = await response.json();
-    return result;
-  };
+    return result.text || "Sorry, I couldn't generate a response.";
+  } catch (error) {
+    console.error("Error fetching AI response:", error);
+    return "Sorry, something went wrong. Please try again later.";
+  }
+};
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputMessage.trim()) return;
 
+const handleSendMessage = async (e: React.FormEvent) => {
+  e.preventDefault(); // Prevent default form submission
+
+  // Ensure inputMessage is defined and trimmed
+  if (inputMessage.trim()) {
     const userMessage = { content: inputMessage, isUser: true };
-    setMessages((prev) => [...prev, userMessage]);
-    setInputMessage("");
-    setIsLoading(true);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
+    setInputMessage(''); // Clear the input field
 
     try {
-      const response = await query({ question: inputMessage });
-      if (response && response.response) {
-        const botMessage = { content: response.response, isUser: false };
-        setMessages((prev) => [...prev, botMessage]);
-      } else {
-        throw new Error("Invalid response format");
-      }
+      setIsLoading(true); // Set loading state
+      const aiResponseText = await generateAIResponse(inputMessage); // Pass 'inputMessage' to the API call
+      const aiMessage = { content: aiResponseText, isUser: false };
+      setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (error) {
-      console.error("Chat error:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to get response from the chatbot. Please try again.",
-      });
+      console.error("Error generating AI response:", error);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Reset loading state
     }
-  };
+  }
+};
+
+
+
 
   const handleMinimize = () => {
     setIsMinimized(true);
