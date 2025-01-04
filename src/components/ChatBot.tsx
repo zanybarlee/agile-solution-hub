@@ -43,13 +43,18 @@ const ChatBot = () => {
 
     try {
       const response = await query({ question: inputMessage });
-      const botMessage = { content: response.response, isUser: false };
-      setMessages((prev) => [...prev, botMessage]);
+      if (response && response.response) {
+        const botMessage = { content: response.response, isUser: false };
+        setMessages((prev) => [...prev, botMessage]);
+      } else {
+        throw new Error("Invalid response format");
+      }
     } catch (error) {
+      console.error("Chat error:", error);
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to get response from the chatbot.",
+        description: "Failed to get response from the chatbot. Please try again.",
       });
     } finally {
       setIsLoading(false);
