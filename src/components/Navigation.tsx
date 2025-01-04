@@ -22,7 +22,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           <a href="/" className="text-2xl font-bold text-white">
             <img 
-              src="/lovable-uploads/847f55eb-a8b0-4ba5-ae6c-3ce22bfa9b65.png" 
+              src="https://quarto.at/assets/images/6/Quarto2-72508e86.png" 
               alt="Quarto Logo" 
               className="h-8"
             />
